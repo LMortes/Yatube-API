@@ -11,6 +11,12 @@ from .serializers import (CommentSerializer,
 from posts.models import Group, Post
 
 
+class ReadAndCreate(mixins.CreateModelMixin,
+                    mixins.ListModelMixin,
+                    viewsets.GenericViewSet):
+    pass
+
+
 class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     """Список групп."""
 
@@ -19,9 +25,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-class FollowViewSet(mixins.CreateModelMixin,
-                    mixins.ListModelMixin,
-                    viewsets.GenericViewSet):
+class FollowViewSet(ReadAndCreate):
     """Список подписок."""
 
     serializer_class = FollowSerializer
